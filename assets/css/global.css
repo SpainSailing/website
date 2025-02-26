@@ -669,6 +669,43 @@ nav .hamburger i.active {
   color: #01862d;
 }
 
+/*course*/
+
+.course {
+  padding: 50px 10%;
+  background-color: #d3e8ef;
+}
+
+.course li {
+  margin-left: 50px;
+}
+
+.course i {
+  margin-right: 10px;
+}
+
+.picture-holder {
+  padding: 50px 0;
+  display: flex;
+  gap: 50px;
+  justify-content: space-around;
+}
+
+.picture-holder img, .picture-holder p {
+  max-width: 40%;
+  text-align: left;
+}
+
+@media screen and (max-width: 600px) {
+  .picture-holder {
+    flex-direction: column;
+  }
+  .picture-holder img, .picture-holder p {
+    max-width: 100%;
+    text-align: left;
+  }
+}
+
 /*subscribe*/
 
 .subscribe {
