@@ -660,9 +660,10 @@ function addPrice() {
 }
 
 function updatePaypal(price) {
-
-  const tourDate = tours[selectedDateIndex].date;
-  const configName = tours[selectedDateIndex].configs[selectedConfigIndex];
+  const selectedDate = document.getElementById("pricePickerDate").value;
+  const selectedConfig = document.getElementById("pricePickerConfig").value;
+  const tourDate = selectedDate;
+  const configName = selectedConfig;
 
   const description = `Booking: ${tourDate} | ${configName}`;
 
