@@ -512,7 +512,7 @@ const tours = [
       "6 persons (whole boat)",
     ],
     prices: [1475, 1950, 3800, 4200, 4600],
-    booked: false,
+    booked: true,
   },
   {
     date: "22nd June 2025 -> 28th June 2025",
@@ -534,7 +534,7 @@ const tours = [
       "6 persons (whole boat)",
     ],
     prices: [1525, 2070, 4100, 4500, 4900],
-    booked: false,
+    booked: true,
   },
   {
     date: "13th July 2025 -> 19th July 2025",
@@ -544,7 +544,7 @@ const tours = [
       "6 persons (whole boat)",
     ],
     prices: [4510, 4990, 5470],
-    booked: false,
+    booked: true,
   },
   {
     date: "27th July 2025 -> 1st August 2025",
@@ -660,6 +660,12 @@ function addPrice() {
 }
 
 function updatePaypal(price) {
+
+  const tourDate = tours[selectedDateIndex].date;
+  const configName = tours[selectedDateIndex].configs[selectedConfigIndex];
+
+  const description = `Booking: ${tourDate} | ${configName}`;
+
   // Clear the previous button container
   document.getElementById("paypal-button-container").innerHTML = "";
 
@@ -670,6 +676,7 @@ function updatePaypal(price) {
         return actions.order.create({
           purchase_units: [
             {
+              description: description,
               amount: {
                 value: price.toFixed(2), // Ensure proper formatting
                 currency_code: "GBP", // Replace with your preferred currency
