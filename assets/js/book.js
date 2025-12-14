@@ -23,6 +23,12 @@ const eclipseStartDate = new Date("2026-08-09");
 const eclipseEndDate = new Date("2026-08-15");
 const eclipseDefaultPrice = 7500;
 
+const blockedPeriods = [
+  { from: new Date(2026, 0, 1), to: new Date(2026, 2, 31) }, // Jan–March
+  { from: new Date(2026, 3, 5), to: new Date(2026, 3, 10) }, // April 6–10
+  { from: new Date(2026, 4, 2), to: new Date(2026, 4, 16) }  // May 2–16
+];
+
 let price = 0.00;
 let tourStartDate = new Date();
 let tourEndDate = new Date();
@@ -42,8 +48,23 @@ const picker = flatpickr("#datePicker",
       document.getElementById("pricePickerEndDate").innerHTML = (date !== undefined) ? 
       `${months[tourEndDate.getMonth()]} ${tourEndDate.getDate()}, ${tourEndDate.getFullYear()}` : "Please choose a start date.";
     },
+    disable: [isDateDisabled],
   }
 );
+
+function isDateDisabled(date) {
+  for (const range of blockedPeriods) {
+    if (date >= range.from && date <= range.to) return true;
+  }
+
+  if (length > 0) {
+    const day = date.getDay();
+    const lastDay = 6 - length;
+    if (day > lastDay) return true;
+  }
+
+  return false;
+}
 
 function addDays(date, days) {
   let result = new Date(date);
@@ -65,13 +86,8 @@ function fitsInWeek(startDate, length) {
 }
 
 function updateDates() {
-  const lengthPicker = document.getElementById("pricePickerLength");
-  length = lengthPicker.value;
-  picker.set('disable', [function (date) {
-    let day = date.getDay();
-    const lastDay = 6-length;
-    return (day > lastDay) ? true : false;
-  }]);
+  length = Number(document.getElementById("pricePickerLength").value);
+  picker.redraw();
   picker.clear();
 }
 
@@ -113,6 +129,10 @@ function updatePaypal(price) {
       },
     })
     .render("#paypal-button-container");
+}
+
+function displayCheckout() {
+  alert("Hello, world!");
 }
 
 document.addEventListener("DOMContentLoaded", function () {

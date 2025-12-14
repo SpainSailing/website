@@ -89,8 +89,8 @@ const components = [
     title: "TOUR SUMMARY",
     text: "Starting and finishing in the beautiful historic resort of Baiona, our Rias Baixas summer tours are 3, 4, 5 or 6 nights long. On a tour full of contrasts you can spend nights at anchor off incredible beaches, bays and islands. Our favourites include Barra Beach with its beautiful sandy beach and walks around the three Cabo Home lighthouses and the Celtic settlements, the Cies Islands with the most stunning beaches and scenery, and the bay of Aldan, with its quiet villages and atmospheric walk through the 'enchanted forest'. You might want to spend time in some of the marinas across the Rias, perhaps in Combarro, Sanxenxo or Vigo. The tour includes your accommodation onboard, all costs to do with the boat, breakfast and snacks, and your skipper, Tom. You are free to use the yacht's well-equipped galley and there are fantastic bars, restaurants and supermarkets throughout the Rias Baixas area. You will have to make your way to and from Baiona but we are happy to help.<br><a style='color: white;' href='tour.html'>Find out more...</a>", images: [
       "assets/images/rias_pop_view.webp",
-      "assets/images/combarro_seafront.webp",
       "assets/images/baiona_from_the_castle.webp",
+      "assets/images/combarro_seafront.webp",
       "assets/images/rias_baixas_picture_resized.webp",
       "assets/images/rias_baixas_cabo_home1.webp",
       "assets/images/anchor_barra_pine.webp",
@@ -104,9 +104,9 @@ const components = [
     ],
     captions: [
       "The Cies Islands viewed from Baiona's Monterreal Castle",
-      "Our tours begin and end here in Combarro",
-      "We will visit Baiona",
-      "Combarro-Anchorage-Baiona-Anchorage-Combarro",
+      "Our tours begin and end here in Baiona",
+      "We will visit Combarro",
+      "Baiona-Anchorage-Combarro-Anchorage-Baiona",
       "One of three lighthouses you can walk to from Barra Beach",
       "At anchor off Barra Beach",
       "The Cies Islands from Cabo Home",
@@ -123,7 +123,7 @@ const components = [
     text: "Spain Sailing is a partnership between brothers Tom and Ed White. Tom skippers all the tours on our yacht 'Marta' while Ed looks after the business side. Originally from land-locked Leicestershire, Tom now lives in Rias Baixas in Galicia, and speaks fluent Spanish. He has many years of experience teaching sailing and he knows the Rias Baixas area well. He is rated RYA Yachtmaster Instructor and has worked in sailing schools around the world. His sailing experiences include crossing the Atlantic single-handed, and competing in the Fastnet Race. Ed lives with his family in Lincolnshire, UK and his background is in business and engineering. He is relatively new to sailing but has sailed 1,000 miles from the Azores to Spain (in Marta). Ed's son Tom (a different Tom!) develops and looks after the website.<br><a style='color: white;' href='contact.html'>Contact us...</a>",
     images: [
       "assets/images/tom_yacht_combarro.webp",
-      "assets/images/combarro_marina2.webp",
+      "assets/images/baiona_from_the_castle.webp",
       "assets/images/food_attis_winery1.webp",
       "assets/images/marta_just_arrived.webp",
       "assets/images/marta_sailing1.webp",
@@ -132,7 +132,7 @@ const components = [
     ],
     captions: [
       "Tom in Combarro",
-      "Spain Sailing's home marina in Combarro",
+      "Spain Sailing's home marina in Baiona",
       "Spain Sailing are happy to recommend some excellent wineries to visit",
       "Tom and Ed with Lydia having just arrived in Combarro after crossing 1000 miles of the Atlantic",
       "Our beautiful yacht Marta",
