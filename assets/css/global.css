@@ -569,9 +569,14 @@ nav .hamburger i.active {
   border: none;
   outline: none;
   padding: 10px;
+  margin: 10px;
   width: 100%;
   cursor: pointer;
   background-color: white;
+}
+
+#pricePickerEndDate {
+  margin: 10px;
 }
 
 .picker form div {

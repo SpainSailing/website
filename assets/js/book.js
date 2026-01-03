@@ -47,6 +47,8 @@ const picker = flatpickr("#datePicker",
       tourEndDate = addDays(date, length-0);
       document.getElementById("pricePickerEndDate").innerHTML = (date !== undefined) ? 
       `${months[tourEndDate.getMonth()]} ${tourEndDate.getDate()}, ${tourEndDate.getFullYear()}` : "Please choose a start date.";
+
+      updatePrice();
     },
     disable: [isDateDisabled],
   }
@@ -132,9 +134,54 @@ function updatePaypal(price) {
 }
 
 function displayCheckout() {
+  if (!(tourStartDate instanceof Date) || isNaN(tourStartDate.getTime())) {
+    alert("Please choose a start date.");
+    return;
+  }
   alert("Hello, world!");
+}
+
+function updatePrice() {
+  if (!tourStartDate || !length || isNaN(length)) {
+    price = 0;
+    return;
+  }
+
+  const guests = Number(document.getElementById("pricePickerPersons").value);
+  const tourEnd = addDays(tourStartDate, length - 1);
+
+  const overlapsEclipse =
+    tourStartDate <= eclipseEndDate && tourEnd >= eclipseStartDate;
+
+  const lengthMult = lengthMultipliers[length] ?? 1.0;
+
+  if (overlapsEclipse) {
+    price = eclipseDefaultPrice * lengthMult;
+
+    price = Math.round(price * 100) / 100;
+    document.getElementById("priceValue").innerText = `£${price.toFixed(2)}`;
+    updatePaypal(price);
+    return;
+  }
+
+  const basePrice = prices[length] ?? 0;
+  const guestMult = noGuestMultipliers[guests] ?? 1.0;
+
+  price = basePrice * lengthMult * guestMult;
+  price = Math.round(price * 100) / 100;
+
+  document.getElementById("priceValue").innerText = `£${price.toFixed(2)}`;
+  //updatePaypal(price);
+  console.log(price);
 }
 
 document.addEventListener("DOMContentLoaded", function () {
   updateDates();
 });
+
+document.getElementById("pricePickerLength").addEventListener("change", () => {
+  updateDates();
+  updatePrice();
+});
+
+document.getElementById("pricePickerPersons").addEventListener("change", updatePrice);

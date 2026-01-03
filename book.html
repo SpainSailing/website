@@ -89,27 +89,12 @@
       <h2>Cultural adventures under sail</h2>
     </div>
   </section>
-
-  <section class="description">
-    <p>We are working on our online booking system at the moment, but in the meantime you can contact us with your
-      preferred dates and we'll let you know if they are available and what the cost would be. We are able to take
-      bookings this way as well.</p>
-    <p>The cost of the tours depends on the time of year, length of tour, and number of guests, but here are some
-      example prices to give you an idea:</p>
-    <li>
-      <ul>3 nights in June with up to 4 guests - £3000</ul>
-      <ul>6 nights in June for 6 guests - £4350</ul>
-      <ul>3 nights in August with up to 4 guests - £3200</ul>
-      <ul>6 nights in August for 6 guests - £4850</ul>
-    </li>
-    <p><b>Please <a href="https://www.spain-sailing.com/contact.html">get in touch</a> and let us know if you're interested.</b></p>
-  </section>
-  <!--
+      
   <section class="picker">
     <form id="pricePicker">
       <div>
         <label>Tour length:</label>
-        <select onchange="updateDates()" id="pricePickerLength">
+        <select id="pricePickerLength">
           <option value="3">3 nights</option>
           <option value="4">4 nights</option>
           <option value="5">5 nights</option>
@@ -122,15 +107,17 @@
       </div>
       <div>
         <label>Number of persons:</label>
-        <select id="pricePickerDate">
-          <option value="1">1 person</option>
-          <option value="2">2 persons</option>
-          <option value="3">3 persons</option>
-          <option value="4">4 persons</option>
-          <option value="5">5 persons</option>
-          <option value="6">6 persons</option>
-        </select>
+        <input
+          type="number"
+          id="pricePickerPersons"
+          min="1"
+          max="6"
+          step="1"
+          value="1"
+        />
+
       </div>
+      <div id="priceValue">Price: </div>
     </form>
     <button onclick="displayCheckout()" class="checkout-button" type="button">
       Checkout
@@ -139,7 +126,6 @@
       <div class="spinner"></div>
     </div>
   </section>
-  -->
 
   <section class="pay hidden">
     <div id="payInfo" class="info-container"></div>
