@@ -103,44 +103,43 @@ function updateDates() {
   picker.clear();
 }
 
-function updatePaypal(price) {
+function initPaypal() {
+  paypal.Buttons({
+  createOrder: function (data, actions) {
 
-  const description = `Dates: ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}, 
-    Nights: ${document.getElementById("pricePickerLength").value}, 
-    Person(s): ${document.getElementById("pricePickerPersons").value}, 
-    Total price: £${price}, 
-    Deposit to be payed now: £${(price/4).toFixed(2)}`;
+    if (!price || price <= 0 || isNaN(price)) {
+      alert("Select dates, length and guests first.");
+      return actions.reject();
+    }
 
-  // Clear the previous button container
-  document.getElementById("paypal-button-container").innerHTML = "";
+    const description = `Dates: ${tourStartDate.toLocaleDateString()} to ${addDays(tourStartDate, length - 1).toLocaleDateString()},
+    Nights: ${length},
+    Person(s): ${document.getElementById("pricePickerPersons").value},
+    Total price: £${price},
+    Deposit now: £${(price / 4).toFixed(2)}`;
 
-  // Render new PayPal buttons
-  paypal
-    .Buttons({
-      createOrder: function (data, actions) {
         return actions.order.create({
-          purchase_units: [
-            {
-              description: description,
-              amount: {
-                value: (price/4).toFixed(2), // Ensure proper formatting
-                currency_code: "GBP", // Replace with your preferred currency
-              },
-            },
-          ],
+          purchase_units: [{
+            description,
+            amount: {
+              value: (price / 4).toFixed(2),
+              currency_code: "GBP"
+            }
+          }]
         });
       },
+
       onApprove: function (data, actions) {
-        return actions.order.capture().then(function (details) {
+        return actions.order.capture().then(details => {
           alert("Transaction completed by " + details.payer.name.given_name);
         });
       },
+
       onError: function (err) {
-        console.error("PayPal error:", err); // Log errors for debugging
-        alert("An error occurred with PayPal. Please try again.");
-      },
-    })
-    .render("#paypal-button-container");
+        console.error("PayPal error:", err);
+      }
+    }).render("#paypal-button-container");
+
 }
 
 function displayCheckout() {
@@ -194,7 +193,7 @@ function updatePrice() {
 
 document.addEventListener("DOMContentLoaded", function () {
   updateDates();
-  updatePaypal();
+  initPaypal();
 });
 
 document.getElementById("pricePickerLength").addEventListener("change", () => {
