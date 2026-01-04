@@ -92,7 +92,6 @@ function fitsInWeek(start, length) {
   const lastNight = addDays(start, length - 1);
   const lastDay = lastNight.getDay();
 
-  if (startDay === 0) return false;
   if (lastDay === 0 && length > 1) return false;
 
   return startDay + (length - 1) <= 6;
@@ -150,6 +149,8 @@ function displayCheckout() {
     return;
   }
 
+  document.querySelector(".pay").style.display = "flex";
+
   const description = `<b>Dates:</b> ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}<br>
     <b>Nights:</b> ${document.getElementById("pricePickerLength").value}<br>
     <b>Person(s):</b> ${document.getElementById("pricePickerPersons").value}<br>
@@ -157,8 +158,6 @@ function displayCheckout() {
     <b>Deposit to be payed now:</b> £${(price/4).toFixed(2)}`;
 
   document.getElementById("payInfo").innerHTML = description;
-      
-  updatePaypal(price.toFixed(2));
 }
 
 function updatePrice() {
@@ -180,7 +179,6 @@ function updatePrice() {
 
     price = Math.round(price * 100) / 100;
     document.getElementById("priceValue").innerText = `£${price.toFixed(2)}`;
-    updatePaypal(price);
     return;
   }
 
@@ -191,12 +189,12 @@ function updatePrice() {
   price = Math.round(price * 100) / 100;
 
   document.getElementById("priceValue").innerText = `£${price.toFixed(2)}`;
-  //updatePaypal(price);
-  console.log(price);
+  document.querySelector(".pay").style.display = "none";
 }
 
 document.addEventListener("DOMContentLoaded", function () {
   updateDates();
+  updatePaypal();
 });
 
 document.getElementById("pricePickerLength").addEventListener("change", () => {

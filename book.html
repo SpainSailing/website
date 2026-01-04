@@ -107,24 +107,20 @@
       </div>
       <div>
         <label>Number of persons:</label>
-        <input
-          type="number"
-          id="pricePickerPersons"
-          min="1"
-          max="6"
-          step="1"
-          value="1"
-        />
-
+        <select id="pricePickerPersons">
+          <option value="1">1 person</option>
+          <option value="2">2 persons</option>
+          <option value="3">3 persons</option>
+          <option value="4">4 persons</option>
+          <option value="5">5 persons</option>
+          <option value="6">6 persons</option>
+        </select>
       </div>
-      <div id="priceValue">Price: </div>
+      <div id="priceValue"></div>
     </form>
     <button onclick="displayCheckout()" class="checkout-button" type="button">
       Checkout
     </button>
-    <div class="spinner-container">
-      <div class="spinner"></div>
-    </div>
   </section>
 
   <section class="pay">
