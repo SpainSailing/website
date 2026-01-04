@@ -1040,6 +1040,10 @@ footer a {
   background-color: #d3e8ef;
 }
 
+.pay.info-container {
+  text-align: center;
+}
+
 .pay.hidden {
   display: none;
 }

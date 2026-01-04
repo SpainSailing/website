@@ -26,7 +26,9 @@ const eclipseDefaultPrice = 7500;
 const blockedPeriods = [
   { from: new Date(2026, 0, 1), to: new Date(2026, 2, 31) }, // Jan–March
   { from: new Date(2026, 3, 5), to: new Date(2026, 3, 10) }, // April 6–10
-  { from: new Date(2026, 4, 2), to: new Date(2026, 4, 16) }  // May 2–16
+  { from: new Date(2026, 4, 2), to: new Date(2026, 4, 16) },  // May 2–16
+  { from: new Date(2026, 4, 25), to: new Date(2026, 4, 29) },
+  { from: new Date(2026, 6, 6), to: new Date(2026, 6, 10) },
 ];
 
 let price = 0.00;
@@ -54,16 +56,27 @@ const picker = flatpickr("#datePicker",
   }
 );
 
+function overlapsBlockedPeriod(start, length) {
+  const firstNight = new Date(start);
+  const lastNight = addDays(start, length - 1);
+
+  return blockedPeriods.some(({ from, to }) => {
+    return firstNight <= to && lastNight >= from;
+  });
+}
+
 function isDateDisabled(date) {
-  for (const range of blockedPeriods) {
-    if (date >= range.from && date <= range.to) return true;
+  const start = new Date(date);
+
+  if (blockedPeriods.some(r => start >= r.from && start <= r.to)) {
+    return true;
   }
 
-  if (length > 0) {
-    const day = date.getDay();
-    const lastDay = 6 - length;
-    if (day > lastDay) return true;
-  }
+  if (!length || length <= 0) return false;
+
+  if (!fitsInWeek(start, length)) return true;
+
+  if (overlapsBlockedPeriod(start, length)) return true;
 
   return false;
 }
@@ -74,17 +87,15 @@ function addDays(date, days) {
   return result;
 }
 
-function fitsInWeek(startDate, length) {
-  const start = new Date(startDate);
-  const end = addDays(start, length);
+function fitsInWeek(start, length) {
+  const startDay = start.getDay(); // Sun=0, Mon=1
+  const lastNight = addDays(start, length - 1);
+  const lastDay = lastNight.getDay();
 
-  const sunday = new Date(start);
-  sunday.setDate(start.getDate() - start.getDay());
+  if (startDay === 0) return false;
+  if (lastDay === 0 && length > 1) return false;
 
-  const saturday = new Date(sunday);
-  saturday.setDate(sunday.getDate() + 6);
-
-  return start >= sunday && end <= saturday;
+  return startDay + (length - 1) <= 6;
 }
 
 function updateDates() {
@@ -94,12 +105,12 @@ function updateDates() {
 }
 
 function updatePaypal(price) {
-  const selectedDate = document.getElementById("pricePickerDate").value;
-  const selectedConfig = document.getElementById("pricePickerConfig").value;
-  const tourDate = selectedDate;
-  const configName = selectedConfig;
 
-  const description = `Booking: ${tourDate} | ${configName}`;
+  const description = `Dates: ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}, 
+    Nights: ${document.getElementById("pricePickerLength").value}, 
+    Person(s): ${document.getElementById("pricePickerPersons").value}, 
+    Total price: £${price}, 
+    Deposit to be payed now: £${(price/4).toFixed(2)}`;
 
   // Clear the previous button container
   document.getElementById("paypal-button-container").innerHTML = "";
@@ -113,7 +124,7 @@ function updatePaypal(price) {
             {
               description: description,
               amount: {
-                value: price.toFixed(2), // Ensure proper formatting
+                value: (price/4).toFixed(2), // Ensure proper formatting
                 currency_code: "GBP", // Replace with your preferred currency
               },
             },
@@ -138,7 +149,16 @@ function displayCheckout() {
     alert("Please choose a start date.");
     return;
   }
-  alert("Hello, world!");
+
+  const description = `<b>Dates:</b> ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}<br>
+    <b>Nights:</b> ${document.getElementById("pricePickerLength").value}<br>
+    <b>Person(s):</b> ${document.getElementById("pricePickerPersons").value}<br>
+    <b>Total price:</b> £${price}<br>
+    <b>Deposit to be payed now:</b> £${(price/4).toFixed(2)}`;
+
+  document.getElementById("payInfo").innerHTML = description;
+      
+  updatePaypal(price.toFixed(2));
 }
 
 function updatePrice() {
